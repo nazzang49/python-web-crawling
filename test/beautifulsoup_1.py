@@ -34,3 +34,6 @@ print(a_tags_text)
 # get all a-tags which class name is dsc
 a_tags = bs.findAll("a", {"class": "dsc"})
 print(a_tags)
+
+for tag in a_tags:
+    print(tag.attrs['href'])
