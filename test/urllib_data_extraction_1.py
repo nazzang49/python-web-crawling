@@ -15,7 +15,8 @@ f = dw.urlopen(img_url).read()
 # w = write
 # r = read
 # a = add
-# b = suffix
+# b = binary
+    # if text -> removal -> just 'w'
 save_file_1 = open(save_path_1, 'wb')
 
 # write data to local PC
