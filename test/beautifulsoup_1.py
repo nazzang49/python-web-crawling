@@ -27,11 +27,11 @@ for tag in a_tags:
     # if value is exist -> append
     # if a_tags[i].getText():
     a_tags_text.append(tag.getText())
-
 print(len(a_tags_text))
 print(a_tags_text)
 
-# get all a-tags which class name is dsc
+# get all a-tags which class name is dsc or location
+# a_tags = bs.findAll("a", {"class": ["dsc", "location"]})
 a_tags = bs.findAll("a", {"class": "dsc"})
 print(a_tags)
 
