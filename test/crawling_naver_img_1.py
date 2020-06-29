@@ -36,7 +36,7 @@ for index, img in enumerate(photo_list[0:]):
     current_src = html_objects.get_attribute('src')
 
     t = urlopen(current_src).read()
-    if index < 400:
+    if index < 700:
         filename = search_keyword + str(count) + ".jpg"
         File = open('D:/cafe-crawling-naver/' + search_keyword + str(count) + '.jpg', 'wb')
         File.write(t)
