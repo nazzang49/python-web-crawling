@@ -33,7 +33,7 @@ n = 1
 for i in img:
     imgUrl = i['data-source']
     with urlopen(imgUrl) as f:
-        with open('D:/cafe-crawling-naver/' + search_keyword + str(n) + '.jpg', 'wb') as h:
+        with open('D:/cafe-cnn-deep-learning-crawling-naver/' + search_keyword + str(n) + '.jpg', 'wb') as h:
             img = f.read()
             h.write(img)
     n += 1

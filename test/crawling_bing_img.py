@@ -42,7 +42,7 @@ for i in img:
 
 n = 1
 for i in imgurl:
-    urlretrieve(i, "D:/cafe-crawling-bing/" + search_keyword + str(n) + ".jpg")
+    urlretrieve(i, "D:/cafe-cnn-deep-learning-crawling-bing/" + search_keyword + str(n) + ".jpg")
     n += 1
 
 # termination

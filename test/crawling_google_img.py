@@ -12,11 +12,11 @@ sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding="utf-8")
 
 # input keyword
-search_keyword = input("검색어를 입력하세요 : ")
+search_keyword = "카페"
 # string formatting
 url = f"https://www.google.com/search?q={quote_plus(search_keyword)}&sxsrf=ALeKk01Kf9wYcHp9ra4r0mAha2cwUxXj3w:1593326226702&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi7zYPe8qPqAhXWdXAKHU9-BNwQ_AUoAnoECA4QBA&biw=1920&bih=1036"
 
-driver = webdriver.Chrome("D:/chromedriver.exe")
+driver = webdriver.Chrome("C:/chromedriver_win32/chromedriver.exe")
 driver.get(url)
 html = driver.page_source
 bs = BeautifulSoup(html, "html.parser")
@@ -41,7 +41,7 @@ for i in img:
 n = 1
 # save as other name
 for i in imgurl:
-    urlretrieve(i, "D:/cafe-crawling/" + search_keyword + str(n) + ".jpg")
+    urlretrieve(i, "C:/cafe-cnn-deep-learning-crawling-google/" + search_keyword + str(n) + ".jpg")
     n += 1
     # if n is 600:
     #     break

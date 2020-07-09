@@ -38,7 +38,7 @@ for index, img in enumerate(photo_list[0:]):
     t = urlopen(current_src).read()
     if index < 700:
         filename = search_keyword + str(count) + ".jpg"
-        File = open('D:/cafe-crawling-bing/' + search_keyword + str(count) + '.jpg', 'wb')
+        File = open('D:/cafe-cnn-deep-learning-crawling-bing/' + search_keyword + str(count) + '.jpg', 'wb')
         File.write(t)
         count += 1
         print("img-save" + str(count))
