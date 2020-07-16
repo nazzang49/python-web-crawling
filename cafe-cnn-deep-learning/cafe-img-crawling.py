@@ -54,7 +54,9 @@ def makeFeatureDataset(category_list, label_num):
         for i, f in enumerate(img_files):
             img = Image.open(f)
             img = img.convert("RGB")
+            # 64*64 -> https://076923.github.io/posts/Python-opencv-8/
             img = img.resize((img_w, img_h))
+            # asarray -> https://rfriend.tistory.com/tag/np.asarray%28%29
             data = np.asarray(img)
 
             # input
@@ -80,9 +82,22 @@ print("train_Y type" + type(train_Y))
 
 # divide into train and test dataset
 X_train, X_test, Y_train, Y_test = train_test_split(train_X, train_Y)
-np.save("./dataset/cafe-cnn-deep-learning-img-classification-dataset", (X_train, X_test, Y_train, Y_test))
+np.save("./dataset/cafe-cnn-deep-learning-img-classification-dataset.npy", (X_train, X_test, Y_train, Y_test))
 
 print("terminate making dataset / length of train_Y -> ", len(train_Y))
+
+# preparation for learning
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
+
+# load saved dataset
+X_train, X_test, Y_train, Y_test = np.load("./dataset/cafe-cnn-deep-learning-img-classification-dataset.npy")
+
+# generalization
+# astype -> convert int into float
+X_train = X_train.astype(float) / 255
+X_test = X_test.astype(float) / 255
 
 
 
