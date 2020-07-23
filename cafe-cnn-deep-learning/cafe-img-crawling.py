@@ -1,10 +1,9 @@
 # enroll label -> cafe-cnn-deep-learning interior themes
 
-# python image library -> PIL
+# python image library
 from PIL import Image
-# numpy -> necessary to make vector dataset
 import os, glob, numpy as np
-# divide train and test dataset -> scikit-learn
+# divide train and test dataset
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
@@ -99,13 +98,64 @@ X_train, X_test, Y_train, Y_test = np.load("./dataset/cafe-cnn-deep-learning-img
 X_train = X_train.astype(float) / 255
 X_test = X_test.astype(float) / 255
 
+with K.tf_ops.device("/device:GPU:0"):
+    model = Sequential()
+    # define filter, kernel size, strides, padding type, input shape, activation function
 
+    # 1
+    model.add(Conv2D(32, (3, 3), padding="same", input_shape=X_train.shape[1:], activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
 
+    # 2
+    model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
 
+    model.add(Flatten())
+    model.add(Dense(256, activation="relu"))
+    model.add(Dropout(0.25))
+    model.add(Dense(nb_classes, activation="softmax"))
 
+    # compile
+    model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
 
+    model_dir = "./model"
 
+    # make directory if it's not exist
+    if not os.path.exists(model_dir):
+        os.mkdir(model_dir)
 
+    model_path = model_dir + "/cafe-img-classification.model"
+    check_point = ModelCheckpoint(filepath=model_path, monitor="val_loss", verbose=1, save_best_only=True)
+
+    # operated when efficiency of model is not getting better results
+    early_stopping = EarlyStopping(monitor="val_loss", patience=6)
+
+    # learning process by train dataset
+    history = model.fit(X_train,
+                        Y_train,
+                        batch_size=32,
+                        epochs=50,
+                        validation_data=(X_test, Y_test),
+                        callbacks=[check_point, early_stopping])
+
+    # check accuracy by test dataset
+    print("accuracy : %.4f" % (model.evaluate(X_test, Y_test)[1]))
+
+    y_vloss = history.history['val_loss']
+    y_loss = history.history['loss']
+
+    x_len = np.arange(len(y_loss))
+
+    # check by graph
+    plt.plot(x_len, y_vloss, marker='.', c='red', label='val_set_loss')
+    plt.plot(x_len, y_loss, marker='.', c='blue', label='train_set_oss')
+    plt.legend()
+    plt.xlabel('epochs')
+    plt.ylabel('loss')
+    plt.grid()
+    plt.show()
 
 
 
