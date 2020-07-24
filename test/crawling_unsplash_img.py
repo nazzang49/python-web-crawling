@@ -37,7 +37,8 @@ imgurl = []
 
 # only crawling src attributes
 for i in img:
-    imgurl.append(i.get("src"))
+    if i.get("src"):
+        imgurl.append(i.get("src"))
 
 n = 1
 # save as other name
