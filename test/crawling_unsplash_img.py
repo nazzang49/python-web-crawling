@@ -7,6 +7,7 @@ from selenium import webdriver
 import sys
 import io
 import time
+import os
 
 # for printing korean
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding="utf-8")
@@ -25,13 +26,19 @@ bs = BeautifulSoup(html, "html.parser")
 
 # scroll reaction
 # max 400 collect
-# for i in range(100):
-#     driver.execute_script("window.scrollBy(0, 1000)")
-#     time.sleep(1)
+for i in range(500):
+    driver.execute_script("window.scrollBy(0, 1000)")
+    time.sleep(1)
 
+current_img_count = len(os.walk("C:/cafe-img/unsplash/").__next__()[2])
 
 # find tags which class name is .rg_i.Q4LuWd
-img = bs.select("._2VWD4")
+img = bs.select("._2zEKz")
+
+print(len(img))
+print(img[0]["src"])
+
+exit()
 
 imgurl = []
 
@@ -40,13 +47,11 @@ for i in img:
     if i.get("src"):
         imgurl.append(i.get("src"))
 
-n = 1
+n = current_img_count + 1
 # save as other name
 for i in imgurl:
     urlretrieve(i, "C:/cafe-img/unsplash/" + search_keyword + str(n) + ".jpg")
     n += 1
-    # if n is 600:
-    #     break
 
 # termination
 driver.close()
