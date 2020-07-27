@@ -24,7 +24,7 @@ for i in range(len(vid)):
     print(i, " : ", vid[i])
 
 # input stream type
-    # default -> string
+    # v1 -> string
 stream_type = int(input("which type of steam do you want : "))
 
 # save youtube video by first stream type

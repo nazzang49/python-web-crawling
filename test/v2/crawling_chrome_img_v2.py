@@ -26,7 +26,7 @@ cafe_theme_kr = {
         10: "친환경",
         11: "에클레틱",
         12: "빈티지",
-        # default
+        # v1
         13: "카페"
     }
 
@@ -43,8 +43,8 @@ cafe_theme_en = {
         10: "environmental",
         11: "eclectic",
         12: "vintage",
-        # default
-        13: "default"
+        # v1
+        13: "v1"
     }
 
 from datetime import datetime
@@ -64,7 +64,7 @@ if index == 13:
 save_directory_name = cafe_theme_en[index]
 
 # string formatting
-url = f"https://search.naver.com/search.naver?where=image&sm=tab_jum&query={quote_plus(search_keyword)}"
+url = f"https://www.google.com/search?q={quote_plus(search_keyword)}&sxsrf=ALeKk01n9CbhJFSTR5dLoacGQlXGMfTBTg:1593337667405&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjY0rCtnaTqAhWUQN4KHcV3B5oQ_AUoAnoECA4QBA&biw=1920&bih=987"
 
 driver = webdriver.Chrome("C:/chromedriver_win32/chromedriver.exe")
 # waiting for 3sec
@@ -75,22 +75,22 @@ for _ in range(10000):
     driver.execute_script("window.scrollBy(0,30000)")
 
 photo_list = []
+photo_list = driver.find_elements_by_tag_name("img.rg_i.Q4LuWd")
 
-photo_list = driver.find_elements_by_tag_name("span.img_border")
-
+# check current download img amounts -> preventing from overwritten
 current_img_count = len(os.walk("C:/cafe-img/" + save_directory_name + "/").__next__()[2])
 print(current_img_count)
 
 count = current_img_count + 1
 
 for index, img in enumerate(photo_list[0:]):
-    # click default img
-    img.click()
-    html_objects = driver.find_element_by_tag_name('img._image_source')
+    # click v1 img
+    webdriver.ActionChains(driver).move_to_element(img).click(img).perform()
+    html_objects = driver.find_element_by_tag_name('img.n3VNCb')
     current_src = html_objects.get_attribute('src')
 
     t = urlopen(current_src).read()
-    if index < 700:
+    if index < 600:
         filename = search_keyword + str(count) + ".jpg"
         File = open('C:/cafe-img/' + save_directory_name + "/" + str(count) + '.jpg', 'wb')
         File.write(t)

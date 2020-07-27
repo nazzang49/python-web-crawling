@@ -35,7 +35,7 @@ print(current_img_count)
 count = current_img_count + 1
 
 for index, img in enumerate(photo_list[0:]):
-    # click default img
+    # click v1 img
     webdriver.ActionChains(driver).move_to_element(img).click(img).perform()
     html_objects = driver.find_element_by_tag_name('img.nofocus')
     current_src = html_objects.get_attribute('src')

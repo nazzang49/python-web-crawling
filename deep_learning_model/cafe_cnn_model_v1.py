@@ -1,4 +1,4 @@
-# enroll label -> cafe-cnn-deep-learning interior themes
+# enroll label -> deep_learning_model interior themes
 
 # python image library
 from PIL import Image
@@ -81,7 +81,7 @@ print("train_Y type" + type(train_Y))
 
 # divide into train and test dataset
 X_train, X_test, Y_train, Y_test = train_test_split(train_X, train_Y)
-np.save("./dataset/cafe-cnn-deep-learning-img-classification-dataset.npy", (X_train, X_test, Y_train, Y_test))
+np.save("./dataset/deep_learning_model-img-classification-dataset.npy", (X_train, X_test, Y_train, Y_test))
 
 print("terminate making dataset / length of train_Y -> ", len(train_Y))
 
@@ -91,7 +91,7 @@ config.gpu_options.allow_growth = True
 session = tf.Session(config=config)
 
 # load saved dataset
-X_train, X_test, Y_train, Y_test = np.load("./dataset/cafe-cnn-deep-learning-img-classification-dataset.npy")
+X_train, X_test, Y_train, Y_test = np.load("./dataset/deep_learning_model-img-classification-dataset.npy")
 
 # generalization
 # astype -> convert int into float

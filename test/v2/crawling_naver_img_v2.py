@@ -1,10 +1,9 @@
-# crawling of bing img
+# crawling of google img
 # keyword is 카페
 from bs4 import BeautifulSoup
 from urllib.parse import quote_plus
 from urllib.request import urlretrieve, urlopen
 from selenium import webdriver
-import time
 import sys
 import io
 import os
@@ -27,7 +26,7 @@ cafe_theme_kr = {
         10: "친환경",
         11: "에클레틱",
         12: "빈티지",
-        # default
+        # v1
         13: "카페"
     }
 
@@ -44,8 +43,8 @@ cafe_theme_en = {
         10: "environmental",
         11: "eclectic",
         12: "vintage",
-        # default
-        13: "default"
+        # v1
+        13: "v1"
     }
 
 from datetime import datetime
@@ -65,40 +64,38 @@ if index == 13:
 save_directory_name = cafe_theme_en[index]
 
 # string formatting
-url = f"https://www.bing.com/images/search?q={quote_plus(search_keyword)}&form=HDRSC2&first=1&scenario=ImageBasicHover"
+url = f"https://search.naver.com/search.naver?where=image&sm=tab_jum&query={quote_plus(search_keyword)}"
 
 driver = webdriver.Chrome("C:/chromedriver_win32/chromedriver.exe")
+# waiting for 3sec
 driver.implicitly_wait(3)
 driver.get(url)
-time.sleep(1)
-html = driver.page_source
-bs = BeautifulSoup(html, "html.parser")
 
-for i in range(500):
-    driver.execute_script("window.scrollBy(0, 10000)")
+for _ in range(10000):
+    driver.execute_script("window.scrollBy(0,30000)")
 
-time.sleep(5)
+photo_list = []
 
-# find tags which class name is .mimg
-img = bs.find_all("img", class_="mimg")
-
-imgurl = []
+photo_list = driver.find_elements_by_tag_name("span.img_border")
 
 current_img_count = len(os.walk("C:/cafe-img/" + save_directory_name + "/").__next__()[2])
 print(current_img_count)
 
-# only crawling src attributes
-for i in img:
-    try:
-        imgurl.append(i.attrs["src"])
-    except KeyError:
-        imgurl.append(i.attrs["data-src"])
+count = current_img_count + 1
 
-n = 1
-for i in imgurl:
-    urlretrieve(i, "C:/cafe-img/" + save_directory_name + "/" + str(current_img_count + n) + ".jpg")
-    n += 1
+for index, img in enumerate(photo_list[0:]):
+    # click v1 img
+    img.click()
+    html_objects = driver.find_element_by_tag_name('img._image_source')
+    current_src = html_objects.get_attribute('src')
 
-# termination
-driver.close()
-
+    t = urlopen(current_src).read()
+    if index < 700:
+        filename = search_keyword + str(count) + ".jpg"
+        File = open('C:/cafe-img/' + save_directory_name + "/" + str(count) + '.jpg', 'wb')
+        File.write(t)
+        count += 1
+        print("img-save" + str(count))
+    else:
+        driver.close()
+        break

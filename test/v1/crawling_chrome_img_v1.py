@@ -41,7 +41,7 @@ for i in img:
 n = 1
 # save as other name
 for i in imgurl:
-    urlretrieve(i, "C:/cafe-cnn-deep-learning-crawling-google/" + search_keyword + str(n) + ".jpg")
+    urlretrieve(i, "C:/deep_learning_model-crawling-google/" + search_keyword + str(n) + ".jpg")
     n += 1
     # if n is 600:
     #     break
