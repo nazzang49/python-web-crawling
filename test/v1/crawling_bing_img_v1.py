@@ -1,13 +1,10 @@
 # crawling of bing img
 # keyword is 카페
 from bs4 import BeautifulSoup
-from urllib.parse import quote_plus
 from urllib.request import urlretrieve
 from selenium import webdriver
-import time
 import sys
 import io
-import os
 from util.util import CrawlingUtil
 from util.type import SiteType
 
@@ -25,8 +22,8 @@ cafe_theme_en = crawling_util.get_category_list_en()
 index = crawling_util.get_index()
 today_theme = cafe_theme_kr[index]
 
+# search keyword
 search_keyword = crawling_util.get_search_keyword(today_theme, index)
-
 save_directory_name = cafe_theme_en[index]
 
 url = crawling_util.get_url(SiteType.BING.value, search_keyword)
@@ -50,9 +47,9 @@ for i in img:
     except KeyError:
         img_urls.append(i.attrs["data-src"])
 
-n = 1
+n = total_count + 1
 for i in img_urls:
-    urlretrieve(i, crawling_util.get_save_path(save_directory_name) + str(total_count + n) + ".jpg")
+    urlretrieve(i, crawling_util.get_save_path(save_directory_name) + str(n) + ".jpg")
     n += 1
 
 driver.close()
