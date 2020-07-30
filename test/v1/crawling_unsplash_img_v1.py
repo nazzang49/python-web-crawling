@@ -6,8 +6,8 @@ from selenium import webdriver
 import sys
 import io
 import time
-from util.util import CrawlingUtil
-from util.type import SiteType
+from util import CrawlingUtil
+from util import SiteType
 
 crawling_util = CrawlingUtil()
 

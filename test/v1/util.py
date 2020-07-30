@@ -1,7 +1,6 @@
 import os
 from _datetime import datetime
 from urllib.parse import quote_plus
-from util.type import SiteType
 
 # common source or logic for crawling at multiple browser
 class CrawlingUtil:
@@ -20,7 +19,6 @@ class CrawlingUtil:
             10: "친환경",
             11: "에클레틱",
             12: "빈티지",
-            # v1
             13: "카페"
         }
         return cafe_theme_kr
@@ -39,7 +37,6 @@ class CrawlingUtil:
             10: "environmental",
             11: "eclectic",
             12: "vintage",
-            # v1
             13: "cafe"
         }
         return cafe_theme_en

@@ -1,11 +1,11 @@
 # crawling of google img
 # keyword is 카페
-from urllib.request import urlretrieve, urlopen
+from urllib.request import urlopen
 from selenium import webdriver
 import sys
 import io
-from util.util import CrawlingUtil
-from util.util import SiteType
+from util import CrawlingUtil
+from util import SiteType
 
 crawling_util = CrawlingUtil()
 

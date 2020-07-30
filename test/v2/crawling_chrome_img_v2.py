@@ -1,11 +1,10 @@
 # crawling of google img
 # keyword is 카페
-from urllib.request import urlretrieve, urlopen
+from urllib.request import urlopen
 from selenium import webdriver
 import sys
 import io
-from util.util import CrawlingUtil
-from util.util import SiteType
+
 
 crawling_util = CrawlingUtil()
 
@@ -25,7 +24,7 @@ today_theme = cafe_theme_kr[index]
 search_keyword = crawling_util.get_search_keyword(today_theme, index)
 save_directory_name = cafe_theme_en[index]
 
-url = crawling_util.get_url(SiteType.CHROME.value, search_keyword)
+url = crawling_util.get_url(type.SiteType.CHROME.value, search_keyword)
 driver = webdriver.Chrome("C:/chromedriver_win32/chromedriver.exe")
 driver.implicitly_wait(3)
 driver.get(url)
