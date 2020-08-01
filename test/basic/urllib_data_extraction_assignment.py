@@ -2,7 +2,7 @@
     # image
     # video
 import urllib.request as request
-# from + package name / import + util name (=class)
+# from + package name / import + custom name (=class)
 from urllib.parse import urlencode
 
 image_url = "https://ssl.pstatic.net/tveta/libs/1292/1292442/2c85b27803114fdfd4cc_20200624175504314_1.jpg"

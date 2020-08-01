@@ -1,5 +1,3 @@
-# crawling of google img
-# keyword is 카페
 from bs4 import BeautifulSoup
 from urllib.parse import quote_plus
 from urllib.request import urlretrieve, urlopen

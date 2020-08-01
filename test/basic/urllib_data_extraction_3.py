@@ -1,6 +1,6 @@
 # urllib package
 import urllib.request as req
-# from + package name / import + util name (=class)
+# from + package name / import + custom name (=class)
 from urllib.parse import urlencode
 
 # https://www.ipify.org/
