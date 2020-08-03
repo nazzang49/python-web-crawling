@@ -21,7 +21,8 @@ def do_unsplash_crawling():
     index = crawling_util.get_index()
     today_theme = cafe_theme_en[index]
 
-    search_keyword = crawling_util.get_search_keyword(today_theme, index)
+    # search_keyword = crawling_util.get_search_keyword(today_theme, index)
+    search_keyword = "cafe"
     save_directory_name = cafe_theme_en[index]
 
     url = crawling_util.get_url(custom.SiteType.UNSPLASH.value, search_keyword)

@@ -36,6 +36,48 @@ img_w = 64
 # 3 -> RGB color system -> 3 color value for 1 point
 pixels = img_h * img_w * 3
 
+np.random.seed(5)
+from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+
+# generate more images to enhance the efficiency
+def generate_more_img(category_list, label_num):
+
+    for idx, category_name in enumerate(category_list):
+        img_each_dir = image_base_dir + "/" + category_name
+        img_files = glob.glob(img_each_dir + "/*.jpg")
+
+        for i, f in enumerate(img_files):
+            # call dataset
+            data_aug_gen = ImageDataGenerator(rescale=1./255,
+                                              rotation_range=15,
+                                              width_shift_range=0.1,
+                                              height_shift_range=0.1,
+                                              shear_range=0.5,
+                                              zoom_range=[0.8, 0.2],
+                                              horizontal_flip=True,
+                                              vertical_flip=True,
+                                              fill_mode="nearest")
+
+            img = load_img(f)
+            x = img_to_array(img)
+            x = x.reshape((1,) + x.shape)
+
+            i = 1
+
+            # control eternal loop by break
+            for batch in data_aug_gen.flow(x,
+                                           batch_size=1,
+                                           save_to_dir='C:/cafe-img/' + category_name,
+                                           save_prefix='plus_' + str(i),
+                                           save_format='jpg'):
+                i += 1
+                # generate 5 more images for every images
+                if i > 6:
+                    break
+
+generate_more_img(category, nb_classes)
+exit()
+
 # enroll label to img -> one hot encoding
 def makeFeatureDataset(category_list, label_num):
     X = []
