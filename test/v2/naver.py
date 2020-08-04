@@ -43,7 +43,7 @@ def do_naver_crawling():
         current_src = html_objects.get_attribute('src')
 
         t = urlopen(current_src).read()
-        if index < 600:
+        if index < 500:
             File = open(crawling_util.get_save_path(save_directory_name) + str(n) + '.jpg', 'wb')
             File.write(t)
             n += 1

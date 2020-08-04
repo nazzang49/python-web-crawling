@@ -46,14 +46,10 @@ def do_chrome_crawling():
         current_src = html_objects.get_attribute('src')
 
         tmp = urlopen(current_src).read()
-        if index < 600:
+        if index < 500:
             File = open(crawling_util.get_save_path(save_directory_name) + str(n) + '.jpg', 'wb')
             File.write(tmp)
             n += 1
         else:
             driver.close()
             break
-
-# if u add this source and execute this module file, do_chrome_crawling() will be proceeded
-if __name__ == "__main__":
-    do_chrome_crawling()

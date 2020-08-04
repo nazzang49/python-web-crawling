@@ -10,16 +10,15 @@ class CrawlingUtil:
             1: "인더스트리얼",
             2: "유러피안",
             3: "클래식",
-            4: "에스닉",
-            5: "컨트리",
-            6: "캐주얼",
-            7: "로맨틱",
-            8: "모던",
-            9: "미니멀",
-            10: "친환경",
-            11: "에클레틱",
-            12: "빈티지",
-            13: "카페"
+            4: "컨트리",
+            5: "캐주얼",
+            6: "로맨틱",
+            7: "모던",
+            8: "미니멀",
+            9: "친환경",
+            10: "에클레틱",
+            11: "빈티지",
+            12: "카페"
         }
         return cafe_theme_kr
 
@@ -28,16 +27,15 @@ class CrawlingUtil:
             1: "industrial",
             2: "european",
             3: "classic",
-            4: "ethnic",
-            5: "country",
-            6: "casual",
-            7: "romantic",
-            8: "modern",
-            9: "minimal",
-            10: "environmental",
-            11: "eclectic",
-            12: "vintage",
-            13: "cafe"
+            4: "country",
+            5: "casual",
+            6: "romantic",
+            7: "modern",
+            8: "minimal",
+            9: "environmental",
+            10: "eclectic",
+            11: "vintage",
+            12: "cafe"
         }
         return cafe_theme_en
 
@@ -46,13 +44,13 @@ class CrawlingUtil:
 
     def get_index(self):
         today = datetime.now().day
-        index = today % 13
+        index = today % 12
         if index == 0:
-            index = 13
+            index = 12
         return index
 
     def get_search_keyword(self, today_theme, index):
-        if index == 13:
+        if index == 12:
             today_theme = "카페"
         return today_theme + " 카페"
 
