@@ -2,8 +2,13 @@
 
 import glob
 from keras_preprocessing.image import ImageDataGenerator, load_img, img_to_array
+import os
 
-img_each_dir = "C:/cafe-img-backup/default"
+# 3052
+print(len(os.walk("C:/cafe-img-backup/environmental").__next__()[2]))
+exit()
+
+img_each_dir = "C:/cafe-img-backup/environmental"
 img_files = glob.glob(img_each_dir + "/*.jpg")
 
 # call dataset
@@ -28,7 +33,7 @@ for i, f in enumerate(img_files):
     # control eternal loop by break
     for batch in data_aug_gen.flow(x,
                                    batch_size=1,
-                                   save_to_dir='C:/cafe-img-backup/default',
+                                   save_to_dir='C:/cafe-img-backup/environmental',
                                    save_prefix=img_file_name,
                                    save_format='jpg'):
         n += 1

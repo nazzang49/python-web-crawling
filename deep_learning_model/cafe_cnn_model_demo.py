@@ -1,4 +1,4 @@
-# enroll label -> deep_learning_model interior themes
+# for backup and test
 
 # python image library
 from PIL import Image
@@ -14,19 +14,8 @@ import tensorflow as tf
 
 image_base_dir = "C:/cafe-img-backup"
 # 13 categories
-category = ["antique",
-            "casual",
-            "classic",
-            "country",
-            "eclectic",
-            "environmental",
-            "ethnic",
-            "european",
-            "industrial",
-            "minimal",
-            "modern",
-            "romantic",
-            "wooden"]
+category = ["default",
+            "environmental"]
 nb_classes = len(category)
 
 # img height, width -> 64 * 64 = 4096 points
@@ -76,7 +65,7 @@ def generate_more_img(category_list, label_num):
                 if i > 5:
                     break
 
-generate_more_img(category, nb_classes)
+# generate_more_img(category, nb_classes)
 
 # enroll label to img -> one hot encoding
 def makeFeatureDataset(category_list, label_num):
@@ -118,29 +107,32 @@ train_Y = np.array(train_Y)
 
 # ndarray -> whole elements should have same types = constraint
 # example -> array([0, 1, 0, 0])
-print("train_X type" + type(train_X))
-print("train_Y type" + type(train_Y))
+print("train_X type" + str(type(train_X)))
+print("train_Y type" + str(type(train_Y)))
 
 # divide into train and test dataset
 X_train, X_test, Y_train, Y_test = train_test_split(train_X, train_Y)
-np.save("./dataset/deep_learning_model-img-classification-dataset.npy", (X_train, X_test, Y_train, Y_test))
+np.save("./dataset/cafe-img-classification-dataset.npy", (X_train, X_test, Y_train, Y_test))
 
 print("terminate making dataset / length of train_Y -> ", len(train_Y))
 
 # preparation for learning
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
+session = tf.compat.v1.Session(config=config)
 
 # load saved dataset
-X_train, X_test, Y_train, Y_test = np.load("./dataset/deep_learning_model-img-classification-dataset.npy")
+X_train, X_test, Y_train, Y_test = np.load("./dataset/cafe-img-classification-dataset.npy", allow_pickle=True)
 
 # generalization
 # astype -> convert int into float
 X_train = X_train.astype(float) / 255
 X_test = X_test.astype(float) / 255
 
-with K.tf_ops.device("/device:GPU:0"):
+tf.config.set_soft_device_placement(True)
+tf.debugging.set_log_device_placement(True)
+
+with K.tf_ops.device("/device:CPU:0"):
     model = Sequential()
     # define filter, kernel size, strides, padding type, input shape, activation function
 
@@ -178,7 +170,8 @@ with K.tf_ops.device("/device:GPU:0"):
     history = model.fit(X_train,
                         Y_train,
                         batch_size=32,
-                        epochs=50,
+                        epochs=30,
+                        # originally, we cannot use test dataset as validation dataset
                         validation_data=(X_test, Y_test),
                         callbacks=[check_point, early_stopping])
 
